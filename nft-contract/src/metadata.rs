@@ -36,6 +36,7 @@ pub struct NFTContractMetadata {
 pub struct TokenMetadata {
     pub title: Option<String>, // ex. "Arch Nemesis: Mail Carrier" or "Parcel #5055"
     pub description: Option<String>, // free-form description
+    pub level: u64,
     pub media: Option<String>, // URL to associated media, preferably to decentralized, content-addressed storage
     pub media_hash: Option<Base64VecU8>, // Base64-encoded sha256 hash of content referenced by the `media` field. Required if `media` is included.
     pub copies: Option<u64>, // number of copies of this set of metadata in existence when token was minted.

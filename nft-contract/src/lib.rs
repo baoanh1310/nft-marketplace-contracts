@@ -74,8 +74,8 @@ impl Contract {
             owner_id, 
         NFTContractMetadata {
             spec: "nft-tutorial-1.0.0".to_string(),
-            name: "VBI NFT Tutorial".to_string(),
-            symbol: "VNFT".to_string(),
+            name: "L2E NFT Tutorial".to_string(),
+            symbol: "L2ENFT".to_string(),
             icon: None,
             base_uri: None,
             reference: None,
@@ -107,7 +107,8 @@ mod tests {
 
     fn get_sample_metadata() -> TokenMetadata {
         TokenMetadata { 
-            title: Some("TOKEN_TEST".to_owned()), 
+            title: Some("L2E_TOKEN".to_owned()), 
+            level: 1,
             description: Some("Description".to_owned()), 
             media: None, 
             media_hash: None, 
@@ -137,7 +138,7 @@ mod tests {
             .build()
         );
 
-        let token_id = "VBI_NFT".to_string();
+        let token_id = "L2E_NFT".to_string();
         contract.nft_mint(token_id.clone(), get_sample_metadata(), accounts(0).to_string());
 
         let token = contract.nft_token(token_id.clone()).unwrap();
@@ -159,7 +160,7 @@ mod tests {
             .predecessor_account_id(accounts(0))
             .build()
         );
-        let token_id = "vbi_nft".to_owned();
+        let token_id = "l2e_nft".to_owned();
         contract.nft_mint(token_id.clone(), get_sample_metadata(), accounts(0).to_string());
 
 
