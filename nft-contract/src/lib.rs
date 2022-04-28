@@ -123,6 +123,24 @@ mod tests {
          }
     }
 
+    fn get_other_sample_metadata() -> TokenMetadata {
+        TokenMetadata { 
+            title: Some("L2E_TOKEN".to_owned()), 
+            level: 2,
+            description: Some("Description".to_owned()), 
+            media: None, 
+            media_hash: None, 
+            copies: None, 
+            issued_at: None, 
+            expires_at: None, 
+            starts_at: None, 
+            updated_at: None, 
+            extra: None, 
+            reference: None, 
+            reference_hash: None
+         }
+    }
+
     #[test]
     fn test_mint_token() {
         let mut context = get_context(false);
@@ -139,13 +157,16 @@ mod tests {
         );
 
         let token_id = "L2E_NFT".to_string();
-        contract.nft_mint(token_id.clone(), get_sample_metadata(), accounts(0).to_string());
+        let new_token_id = "L2E_NFT_NEW".to_string();
+        contract.nft_mint(token_id.clone(), get_sample_metadata(), accounts(0).to_string(), Some(HashMap::new()));
+        contract.nft_mint(new_token_id.clone(), get_other_sample_metadata(), accounts(0).to_string(), Some(HashMap::new()));
 
         let token = contract.nft_token(token_id.clone()).unwrap();
 
         assert_eq!(accounts(0).to_string(), token.owner_id);
         assert_eq!(token_id.clone(), token.token_id);
         assert_eq!(token.metadata, get_sample_metadata());
+        assert_eq!(contract.nft_level_for_owner(accounts(0).to_string()), 2 as u64);
     }
 
     #[test]
@@ -161,7 +182,7 @@ mod tests {
             .build()
         );
         let token_id = "l2e_nft".to_owned();
-        contract.nft_mint(token_id.clone(), get_sample_metadata(), accounts(0).to_string());
+        contract.nft_mint(token_id.clone(), get_sample_metadata(), accounts(0).to_string(), Some(HashMap::new()));
 
 
         let token = contract.nft_token(token_id.clone()).unwrap();

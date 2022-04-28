@@ -49,4 +49,23 @@ impl Contract {
         .map(|token_id| self.nft_token(token_id.clone()).unwrap() )
         .collect()
     }
+
+    // Get NFT level of one user
+    pub fn nft_level_for_owner(&self, account_id: AccountId) -> u64 {
+        let token_keys = self.tokens_per_owner.get(&account_id);
+
+        let keys = if let Some(token_keys) = token_keys {
+            token_keys
+        } else {
+            return 0;
+        };
+
+        let nft_level_list: Vec<u64> = keys.as_vector()
+        .iter()
+        .map(|token_id| self.nft_token(token_id.clone()).unwrap().metadata.level )
+        .collect();
+
+        let max_level = *nft_level_list.iter().max().unwrap();
+        max_level
+    }
 }
